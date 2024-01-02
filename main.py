@@ -10,7 +10,7 @@ dog_cascade = cv2.CascadeClassifier('data/dog_face.xml')
 cat_cascade = cv2.CascadeClassifier('data/haarcascade_frontalcatface_extended.xml')
 
 
-@app.post("/detect_dog_face/")
+@app.post("/detectDogFace")
 async def detect_dog_face_endpoint(files: List[UploadFile] = File(...)):
     results = []
 
