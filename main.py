@@ -6,8 +6,8 @@ import cv2
 
 app = FastAPI()
 
-dog_cascade = cv2.CascadeClassifier('dog_face.xml')
-cat_cascade = cv2.CascadeClassifier('haarcascade_frontalcatface_extended.xml')
+dog_cascade = cv2.CascadeClassifier('data/dog_face.xml')
+cat_cascade = cv2.CascadeClassifier('data/haarcascade_frontalcatface_extended.xml')
 
 
 @app.post("/detect_dog_face/")
