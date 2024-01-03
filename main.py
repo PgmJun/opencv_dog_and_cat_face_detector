@@ -17,10 +17,9 @@ async def detect_dog_face_endpoint(files: List[UploadFile] = File(...)):
 
     for file in files:
         await validate_file_size(file)
+        await file.seek(0)
         contents = await file.read()
-
-        is_dog_face_detected = detect_dog_face(contents)
-        results.append(is_dog_face_detected)
+        results.append(await detect_dog_or_cat_face(contents))
 
     return {"results": results}
 
@@ -35,7 +34,7 @@ async def validate_file_size(file):
             )
 
 
-def detect_dog_face(contents):
+async def detect_dog_or_cat_face(contents):
     # 이미지를 NumPy 배열로 변환
     img = np.asarray(bytearray(contents), dtype="uint8")
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
@@ -43,7 +42,7 @@ def detect_dog_face(contents):
     # 그레이 스케일 변환
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # 강아지 얼굴 감지
+    # 강아지/고양이 얼굴 감지
     dogs = dog_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
     cats = cat_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
 
