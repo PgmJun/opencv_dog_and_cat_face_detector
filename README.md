@@ -1,7 +1,7 @@
 # OpenCV를 활용한 강아지,고양이 얼굴 탐지 API 서버 🐶🐱
 Dog and cat face detector api server with OpenCV
 
-### Tools
+### Main Tech
 - Python 3.9
 - FastAPI
 - OpenCV
