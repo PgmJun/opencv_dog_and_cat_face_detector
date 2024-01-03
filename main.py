@@ -12,17 +12,27 @@ cat_cascade = cv2.CascadeClassifier('model/haarcascade_frontalcatface_extended.x
 
 
 @app.post("/detectDogFace")
-def detect_dog_face_endpoint(files: List[UploadFile] = File(...)):
+async def detect_dog_face_endpoint(files: List[UploadFile] = File(...)):
     results = []
 
     for file in files:
-        validate_file_size(file)
-        contents = file.read()
+        await validate_file_size(file)
+        contents = await file.read()
 
         is_dog_face_detected = detect_dog_face(contents)
         results.append(is_dog_face_detected)
 
     return {"results": results}
+
+
+async def validate_file_size(file):
+    file_size = 0
+    for chunk in file.file:
+        file_size = file_size + len(chunk)
+        if file_size > 1 * 1024 * 1024:
+            raise HTTPException(
+                status_code=HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="Image size is too large"
+            )
 
 
 def detect_dog_face(contents):
@@ -40,12 +50,3 @@ def detect_dog_face(contents):
     # 감지된 얼굴이 있는지 여부를 반환
 
     return (len(dogs) + len(cats)) > 0
-
-def validate_file_size(file: UploadFile):
-    real = 0
-    for chunk in file.file:
-        real = real + len(chunk)
-        if real > 2 * 1024 * 1024:
-            raise HTTPException(
-                status_code=HTTP_413_REQUEST_ENTITY_TOO_LARGE, detail="Image size is too large"
-            )
