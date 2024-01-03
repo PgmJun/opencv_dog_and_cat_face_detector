@@ -8,6 +8,10 @@ Dog and cat face detector api server with OpenCV
 - Numpy
 - Uvicorn
 
+## Docs
+FastAPI 서버 실행 후, `http://127.0.0.1/docs` 접속
+
+Access line `http://127.0.0.1/docs` after running FastAPI server
 
 ## pip를 최신버전으로 업데이트 (Update pip to latest version)
 ```shell
@@ -31,9 +35,7 @@ pip install opencv-python
 
 ## Uvicorn 설치 (Install Uvicorn)
 ```shell
-pip install 
 pip install "uvicorn[standard]"
-uvicorn main:app --reload
 ```
 FastAPI로 작성한 프로그램을 작동시키기 위해서는 작동시킬 서버가 필요하다.
 `유비콘(Uvicorn)`은 비동기 호출을 지원하는 파이썬용 웹 서버이며, 이를 사용해서 FastAPI를 실행시킬 수 있다.
@@ -45,5 +47,3 @@ To run a program written with FastAPI, you need a server to run it.
 ```shell
 uvicorn main:app --reload
 ```
-
-
